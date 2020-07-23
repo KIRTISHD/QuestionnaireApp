@@ -39,7 +39,6 @@ export class StartComponent implements OnInit {
       age: ['', [Validators.required, Validators.min(1), Validators.max(20)]],
       gender: ['', Validators.required],
       email: [''],
-      // quizname: ['', [Validators.required]]
     });
 
     this.loginForm = this.formBuilder.group({
