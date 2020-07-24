@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ElementRef, Renderer2 } from '@angular/core';
 import { ActualquizService } from '../services/actualquiz.service';
 import { Question } from '../models/Question';
 import { QuizResponse } from '../models/QuizResponse';
@@ -28,6 +28,9 @@ export class QuizComponent implements OnInit, OnDestroy {
   ellapsedTime = '00:00';
   duration = '';
 
+  //selected radio button
+  div: any;
+
   pager = {
     index: 0,
     count: 1
@@ -35,9 +38,17 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   constructor(private quizService: ActualquizService,
               private router: Router,
-              private userService: UserService) {
+              private userService: UserService,
+              private elRef:ElementRef,
+              private renderer: Renderer2) {
 
+    // used in production -------------------------
     const userdetails = JSON.parse(localStorage.getItem('userdetails') || '{}');
+    // ---------------------------------------------
+
+    // used in testing -------------------------
+    // const userdetails = { quizid: '5efcc78c8430663b8404f50c', username: '5f193ee6568a561974c40cf5'}
+    // ---------------------------------------------
     localStorage.removeItem('userdetails');
     this.response = new QuizResponse(userdetails.quizid, userdetails.username);
     this.loadQuestions(userdetails.quizid);
@@ -82,7 +93,12 @@ export class QuizComponent implements OnInit, OnDestroy {
   startTimerPerQuestion() {
     this.startTime = new Date();
     this.endTime = new Date();
-    this.endTime.setSeconds(this.endTime.getSeconds() + 10);
+    // -------------used in production -------------------
+    this.endTime.setSeconds(this.endTime.getSeconds() + 30);
+    // ---------------------------------------------------
+    // -------------used in tesing -------------------
+    // this.endTime.setSeconds(this.endTime.getSeconds() + 999999);
+    // ---------------------------------------------------
     this.ellapsedTime = '00:00';
     this.timer = setInterval(() => { this.tick(); }, 1000);
     this.duration = this.parseTime(10);
@@ -171,6 +187,54 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
 
   return options;
+  }
+
+  clickfn(no: any){
+
+    console.log("click jhala-"  + no);
+
+    // -----------------also working -------------------------------
+    // const alllabels = this.elRef.nativeElement.querySelectorAll('[name="labels"]');
+    // console.log(alllabels);
+    // alllabels.forEach((element: any) => {
+
+    //   this.renderer.addClass(element, 'radio-button-css');
+
+    //   if (element.classList.contains('changeLbl')){
+    //     this.renderer.removeClass(element, 'changeLbl');
+    //   }
+    // });
+    // ------------------------also worked ------------------------------------
+    // this.renderer.removeClass(alllabels, 'changeLbl');
+    // this.renderer.addClass(alllabels, 'radio-button-css');
+
+    // div.className.remove("radio-button-css");
+    // div.className.add("changeLbl");
+
+  // background-color: #6601d9;
+  // color: white;
+
+
+    if (this.div != null) {
+      this.renderer.removeClass(this.div, 'changeLbl');
+      this.renderer.addClass(this.div, 'radio-button-css');
+    }  
+
+    this.div = this.elRef.nativeElement.querySelector('#lbl_'+ no);
+    this.renderer.removeClass(this.div, 'radio-button-css');
+    this.renderer.addClass(this.div, 'changeLbl');
+    // console.log(div);
+  }
+
+  clearAll() {
+    console.log(this.div);
+    if (this.div != null){
+      this.div.querySelector('input').checked = false;
+      console.log(this.div.querySelector('input'));
+      this.renderer.removeClass(this.div, 'changeLbl');
+      this.renderer.addClass(this.div, 'radio-button-css');
+      this.div = null;
+    }
   }
 
 }

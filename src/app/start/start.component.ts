@@ -12,7 +12,6 @@ import { UserService } from '../services/user.service';
 })
 export class StartComponent implements OnInit {
 
-  signInpage = true;
   registerForm!: FormGroup;
   loginForm!: FormGroup;
   registersubmitted = false;
@@ -20,6 +19,7 @@ export class StartComponent implements OnInit {
   quizList: Quiz[] = [];
   quizId = '';
 
+  signInpage = true;
   hasUsername = '';
 
   constructor(private formBuilder: FormBuilder, private adminService: AdminService, private router: Router, private userService: UserService) {

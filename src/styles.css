@@ -1,1 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-image: url('assets/background1.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media only screen and (max-width: 400px) {
+  body{
+    overflow: scroll;
+  }
+}

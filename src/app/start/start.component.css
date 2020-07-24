@@ -1,8 +1,74 @@
+h1 {
+  background-color: #6601d9;
+}
+
+button{
+  background-color: #6601d9;
+  color: white;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+button:hover{
+  color: white;
+}
+
 .my-container-css{
   margin-top: 50px;
+}
+.mid-container{
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.text-header{
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid;
+  padding: 20px;
+  color: white;
 }
 
 .register-temp{
   font-size: 1rem;
+  text-align: center;
+}
+.register-temp a{
+  font-size: 1.25rem;
   cursor: pointer;
+  color: #6601d9;
+}
+
+.form-css{
+  border-radius: 10px;
+  background-color: white;
+}
+
+.inner-container{
+  padding: 20px;
+}
+
+.username-css{
+    text-align: center;
+    background: purple;
+    padding: 5px;
+    color: white;
+}
+
+
+/* to remove arrows from input number
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }

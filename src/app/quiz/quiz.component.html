@@ -1,23 +1,33 @@
-<div class="container">
-    <div *ngIf="ready == true">
-
-        <div class="badge badge-info">Question {{pager.index + 1}} of {{pager.count}}.</div>
-        <div *ngIf="duration" class="badge badge-info float-right">Time: {{ellapsedTime}} / {{duration}}</div>
-
-        <div class="font-weight-normal" id="question">
-            <h3 class="col-12"><span>{{currentQuestion.quest}}</span></h3>
-        </div>
-        <div class="row text-left options">
-            <div class="col-6" *ngFor="let option of currentQuestion.options; let i = index">
-                <div class="option">
-                    <label class="font-weight-normal" [attr.for]="option">
-                        <!-- <input id="{{option.id}}" type="checkbox" [(ngModel)]="option.selected" (change)="onSelect(question, option);" /> {{option.name}} -->
-                        <input type="radio" (change)="onSelect(option)" name="answeroptions" /> {{option}}
-                    </label>
+<div class="big-container">
+    <div class="container h-100 my-container-css">
+        <div class="mid-container">
+            <div *ngIf="ready == true">
+                <div class="timers-div">
+                    <div class=" question-no-div">Question {{pager.index + 1}} of {{pager.count}}</div>
+                    <div *ngIf="duration" class=" duration-div ">Time: {{ellapsedTime}} / {{duration}}
+                    </div>
+                </div>
+                <div style="clear: both;"></div>
+                <div class="inner-container">
+                    <div class="question-header" id="question">
+                        <h3><span>{{currentQuestion.quest}}</span></h3>
+                    </div>
+                    <div class="options-overall">
+                        <div class="" *ngFor="let option of currentQuestion.options; let i = index">
+                            <!-- <input id="{{option.id}}" type="checkbox" [(ngModel)]="option.selected" (change)="onSelect(question, option);" /> {{option.name}} -->
+                            <label  class="radio-button-css" for="radio_{{i}}" id="lbl_{{i}}" name="labels">
+                                <input (click)="clickfn(i)" type="radio" (change)="onSelect(option)" name="answeroptions" id="radio_{{i}}" />
+                                {{option}}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="buttons-overall">
+                        <button type="button" class="btn btn-clear" (click)="clearAll()"> Clear</button>
+                        <button type="button" id="id1" class="btn btn-nextq" (click)="nextQuestion()"> NEXT
+                            QUESTION</button>
+                    </div>
                 </div>
             </div>
         </div>
-        <button type="button" id="id1" class="btn btn-primary col-3" (click)="nextQuestion()"> NEXT QUESTION</button>
-        <button type="button" class="btn btn-info col-2" (click)="getTime()"> Clear</button>
     </div>
 </div>

@@ -1,100 +1,105 @@
-<div class="container h-100 my-container-css">
-  <div class="row h-100 justify-content-center align-items-center">
-    <div class="col-10 col-md-8 col-lg-6">
+<div class="big-container">
+  <div class="container h-100" [ngStyle]="{'margin-top':signInpage === true ? '50px' : '15px'}">
+    <div class="mid-container">
       <!-- Form -->
-      <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()" *ngIf="signInpage == true">
-        <h1 class="mb-3">Begin Quiz...</h1>
-        <div class="form-group input-group mb-3 col-md-8 col-md-offset-2">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon11">Enter Username</span>
+      <form class="form-css" [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()" *ngIf="signInpage == true">
+        <h1 class="text-header">Begin Quiz...</h1>
+        <div class="inner-container">
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon11">Enter Username</span>
+            </div>
+            <input type="text" formControlName="name" class="form-control"
+              [ngClass]="{ 'is-invalid': registersubmitted && g.name.errors }" placeholder="Name" aria-label="Name"
+              aria-describedby="basic-addon11" />
+            <div *ngIf="registersubmitted && g.name.errors" class="invalid-feedback">
+              <div *ngIf="g.name.errors.required">Name is required</div>
+              <div *ngIf="g.name.errors.minlength">Minimum length is 3</div>
+              <div *ngIf="g.name.errors.maxlength">Maximum length is 15</div>
+            </div>
           </div>
-          <input type="text" formControlName="name" class="form-control"
-            [ngClass]="{ 'is-invalid': registersubmitted && g.name.errors }" placeholder="Name" aria-label="Name"
-            aria-describedby="basic-addon11" />
-          <div *ngIf="registersubmitted && g.name.errors" class="invalid-feedback">
-            <div *ngIf="g.name.errors.required">Name is required</div>
-            <div *ngIf="g.name.errors.minlength">Minimum length is 3</div>
-            <div *ngIf="g.name.errors.maxlength">Maximum length is 15</div>
-          </div>
-        </div>
 
-        <div class="input-group mb-3  col-md-8 col-md-offset-2">
-          <div class="input-group-prepend">
-            <label class="input-group-text" for="inputGroupSelect04">Select Quiz</label>
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect04">Select Quiz</label>
+            </div>
+            <select formControlName="quizname" class="form-control custom-select" id="inputGroupSelect04"
+              [ngClass]="{ 'is-invalid': registersubmitted && g.quizname.errors }">
+              <option *ngFor="let quiz of quizList" [ngValue]="quiz._id">{{quiz.quizName}}</option>
+            </select>
+            <div *ngIf="registersubmitted && g.quizname.errors" class="invalid-feedback">
+              <div *ngIf="g.quizname.errors.required">Select any quiz</div>
+            </div>
           </div>
-          <select formControlName="quizname" class="form-control custom-select" id="inputGroupSelect04"
-            [ngClass]="{ 'is-invalid': registersubmitted && g.quizname.errors }">
-            <option *ngFor="let quiz of quizList" [ngValue]="quiz._id">{{quiz.quizName}}</option>
-          </select>
-          <div *ngIf="registersubmitted && g.quizname.errors" class="invalid-feedback">
-            <div *ngIf="g.quizname.errors.required">Select any quiz</div>
+          <div class="input-group form-group mt-2">
+            <button type="submit" class="btn" style="width: 100%; margin-top: 2rem;">Start</button>
           </div>
+          <p class="register-temp"> Don't have a Username? <a (click)=togglePage()>Register</a></p>
         </div>
-        <button type="submit" class="btn btn-primary mb-3 col-md-8 col-md-offset-2 mt-4">Start</button>
-        <p class="register-temp"> Don't have a Username? <a (click)=togglePage()>Register</a></p>
       </form>
       <!-- Form end -->
 
       <!-- Register Form-->
-      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()"  *ngIf="signInpage == false">
-        <h1 class="mb-3">Registration Form</h1>
-        <div class="form-group input-group mb-3 col-md-8 col-md-offset-2">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">Enter your Name</span>
+      <form class="form-css" [formGroup]="registerForm" (ngSubmit)="onSubmit()" *ngIf="signInpage == false">
+        <h1 class="text-header">Registration Form</h1>
+        <div class="inner-container">
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">Enter your Name</span>
+            </div>
+            <input type="text" formControlName="name" class="form-control"
+              [ngClass]="{ 'is-invalid': registersubmitted && f.name.errors }" placeholder="Name" aria-label="Name"
+              aria-describedby="basic-addon1" />
+            <div *ngIf="registersubmitted && f.name.errors" class="invalid-feedback">
+              <div *ngIf="f.name.errors.required">Name is required</div>
+              <div *ngIf="f.name.errors.minlength">Minimum length is 3</div>
+              <div *ngIf="f.name.errors.maxlength">Maximum length is 30</div>
+            </div>
           </div>
-          <input type="text" formControlName="name" class="form-control"
-            [ngClass]="{ 'is-invalid': registersubmitted && f.name.errors }" placeholder="Name" aria-label="Name"
-            aria-describedby="basic-addon1" />
-          <div *ngIf="registersubmitted && f.name.errors" class="invalid-feedback">
-            <div *ngIf="f.name.errors.required">Name is required</div>
-            <div *ngIf="f.name.errors.minlength">Minimum length is 3</div>
-            <div *ngIf="f.name.errors.maxlength">Maximum length is 30</div>
-          </div>
-        </div>
 
-        <div class="form-group input-group mb-3 col-md-8 col-md-offset-2">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon2">Enter your Age</span>
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon2">Enter your Age</span>
+            </div>
+            <input type="number" formControlName="age" class="form-control"
+              [ngClass]="{ 'is-invalid': registersubmitted && f.age.errors }" placeholder="Age" aria-label="Age"
+              aria-describedby="basic-addon2"  min="1" max="20"/>
+            <div *ngIf="registersubmitted && f.age.errors" class="invalid-feedback">
+              <div *ngIf="f.age.errors.required">Age is required</div>
+              <div *ngIf="f.age.errors.min">Minimum age is 1</div>
+              <div *ngIf="f.age.errors.max">Maximum age is 20</div>
+            </div>
           </div>
-          <input type="number" formControlName="age" class="form-control"
-            [ngClass]="{ 'is-invalid': registersubmitted && f.age.errors }" placeholder="Age" aria-label="Age"
-            aria-describedby="basic-addon2" />
-          <div *ngIf="registersubmitted && f.age.errors" class="invalid-feedback">
-            <div *ngIf="f.age.errors.required">Age is required</div>
-            <div *ngIf="f.age.errors.min">Minimum age is 1</div>
-            <div *ngIf="f.age.errors.max">Maximum age is 20</div>
-          </div>
-        </div>
 
-        <div class="input-group mb-3 col-md-8 col-md-offset-2">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon3">Enter your Email</span>
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon3">Enter your Email</span>
+            </div>
+            <input type="text" formControlName="email" class="form-control"
+              [ngClass]="{ 'is-invalid': registersubmitted && f.email.errors }" placeholder="Email" aria-label="Email"
+              aria-describedby="basic-addon3" />
+            <div *ngIf="registersubmitted && f.email.errors" class="invalid-feedback">
+              <div *ngIf="f.email.errors.required">Email is required</div>
+              <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+            </div>
           </div>
-          <input type="text" formControlName="email" class="form-control"
-            [ngClass]="{ 'is-invalid': registersubmitted && f.email.errors }" placeholder="Email" aria-label="Email"
-            aria-describedby="basic-addon3" />
-          <div *ngIf="registersubmitted && f.email.errors" class="invalid-feedback">
-            <div *ngIf="f.email.errors.required">Email is required</div>
-            <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
-          </div>
-        </div>
 
-        <div class="input-group mb-3  col-md-8 col-md-offset-2">
-          <div class="input-group-prepend">
-            <label class="input-group-text" for="inputGroupSelect02">Select Gender</label>
+          <div class="input-group form-group">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect02">Select Gender</label>
+            </div>
+            <select formControlName="gender" class="form-control custom-select" id="inputGroupSelect02"
+              [ngClass]="{ 'is-invalid': registersubmitted && f.gender.errors }">
+              <option value="male" selected>Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+            <div *ngIf="registersubmitted && f.gender.errors" class="invalid-feedback">
+              <div *ngIf="f.gender.errors.required">Gender is required</div>
+            </div>
           </div>
-          <select formControlName="gender" class="form-control custom-select" id="inputGroupSelect02"
-            [ngClass]="{ 'is-invalid': registersubmitted && f.gender.errors }">
-            <option value="male" selected>Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
-          <div *ngIf="registersubmitted && f.gender.errors" class="invalid-feedback">
-            <div *ngIf="f.gender.errors.required">Gender is required</div>
-          </div>
-        </div>
 
-        <!--
+          <!--
         <div class="input-group mb-3  col-md-8 col-md-offset-2">
           <div class="input-group-prepend">
             <label class="input-group-text" for="inputGroupSelect03">Select Quiz</label>
@@ -108,16 +113,17 @@
           </div>
         </div>
       -->
-        <button type="submit" class="btn btn-primary mb-3 col-md-8 col-md-offset-2 mt-4">Register</button>
-        <!-- <div class="input-group mb-3 col-md-8 col-md-offset-2">
-          <div class="text-center">
-            <button class="btn btn-primary" type="submit">Register</button>
+          <!-- <button type="submit" class="btn btn-primary mb-3 col-md-8 col-md-offset-2 mt-4">Register</button> -->
+          <div class="input-group form-group mt-2">
+            <button class="btn" type="submit" style="width: 100%; margin-top: 2rem;">Register</button>
           </div>
-        </div> -->
 
 
-        <p class="register-temp"> Already Have an account? <a (click)=togglePage()>Start Quiz</a></p>
-        <h2 *ngIf="hasUsername != '' "> Your username is - {{hasUsername}}</h2>
+          <p class="register-temp"> Already Have an account? <a (click)=togglePage()>Start Quiz</a></p>
+          <h2 *ngIf="hasUsername != '' " class="username-css"> Your username is - {{hasUsername}}</h2>
+
+        </div>
+
       </form>
       <!-- Register Form ends-->
     </div>

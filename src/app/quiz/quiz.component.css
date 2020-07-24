@@ -1,27 +1,88 @@
-.container {
-    margin-top: 40px;
+.my-container-css{
+    margin-top: 50px;
+    font-family: 'Open Sans';
 }
 
-.col-6 {
-    margin-left: 300px;
+.mid-container {
+    border: 1px solid black;
+    border-radius: 4px;
 }
 
-#id1 {
+.inner-container{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    background-color: white;
+}
+
+.timers-div{
+    padding: 15px;
+    background-color: #6601d9;
+    overflow: hidden;
+}
+
+.question-no-div{
+    float:left;
+    color: white;
+    padding: 5px;
+}
+
+.duration-div{
     float: right;
+    color: white;
+    padding: 5px;
 }
 
-.container {
-    margin-top: 40px;
+.question-header{
+    text-align: center;
+    padding: 20px;
+    max-width: 100%;
+    line-height: 1.1rem;
 }
 
-@media only screen and (min-width: 100px) {
-    #question {
-        text-align: center;
-    }
+.options-overall{
+    line-height: 2rem;
 }
 
-@media only screen and (max-width: 1000px) {
-    .col-4 {
-        height: 30px;
-    }
+.radio-button-css{
+    padding: 6px 10px;
+    background-color: lightgray;
+    border-radius: 4px;
+    color: black;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.options-overall input[type="radio"]:checked+label {
+    background-color: #6601d9;
+    color:white;
+}
+.changeLbl{
+    padding: 6px 10px;
+    background-color: #6601d9;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+input[type="radio"]{
+     /*display: none; */
+}
+
+.buttons-overall{
+    width: 100%;
+}
+.btn-clear{
+    float: left;
+    background-color: #6601d9;
+    color:white;
+}
+
+.btn-nextq{
+    float: right;
+    background-color: #6601d9;
+    color:white;
 }
