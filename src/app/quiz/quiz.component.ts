@@ -28,6 +28,9 @@ export class QuizComponent implements OnInit, OnDestroy {
   ellapsedTime = '00:00';
   duration = '';
 
+  //this is the final quiz time-
+  quizcommontime = 30;
+
   //selected radio button
   div: any;
 
@@ -83,7 +86,6 @@ export class QuizComponent implements OnInit, OnDestroy {
       },
       () => {
         this.ready = true;
-        console.log('ready ' + ' quiz length- ' + this.pager.count);
 
         this.startTimerPerQuestion();
 
@@ -94,17 +96,23 @@ export class QuizComponent implements OnInit, OnDestroy {
     this.startTime = new Date();
     this.endTime = new Date();
     // -------------used in production -------------------
-    this.endTime.setSeconds(this.endTime.getSeconds() + 30);
+    this.endTime.setSeconds(this.endTime.getSeconds() + this.quizcommontime);
     // ---------------------------------------------------
     // -------------used in tesing -------------------
     // this.endTime.setSeconds(this.endTime.getSeconds() + 999999);
     // ---------------------------------------------------
-    this.ellapsedTime = '00:00';
+
+    // ------ timer for 30 sec
+    this.ellapsedTime = '00:30';
+    //---------timer
     this.timer = setInterval(() => { this.tick(); }, 1000);
-    this.duration = this.parseTime(30);
+    this.duration = this.parseTime(this.quizcommontime);
   }
 
   nextQuestion() {
+
+    // console.log('current question id-' +this.currentQuestion.id.trim(),'current question-' +this.currentQuestion.quest.trim(),'current my answer-' + this.tempAnswer.trim(),'current your answer-' + this.currentQuestion.answer.trim(), this.getTime());
+
     let finishQuiz = false;
     // if any option selected
     if (this.ifSelectedAny) {
@@ -132,8 +140,10 @@ export class QuizComponent implements OnInit, OnDestroy {
     }
 
     if (!finishQuiz){
-      this.currentQuestion = this.questions[this.pager.index];
+      this.ellapsedTime = '00:30';
+      clearInterval(this.timer);
       this.startTimerPerQuestion();
+      this.currentQuestion = this.questions[this.pager.index];
     }
   }
 
@@ -149,7 +159,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     const timeArray = this.ellapsedTime.split(':');
     const min: number = +timeArray[0];
     const sec: number = +timeArray[1];
-    const totalSec = 10 - (min * 60 + sec);
+    const totalSec = this.quizcommontime - (min * 60 + sec);
     return totalSec;
   }
 
@@ -159,7 +169,6 @@ export class QuizComponent implements OnInit, OnDestroy {
     const diff = (this.endTime.getTime() - now.getTime()) / 1000;
     if (diff < 0 && this.pager.index !== this.pager.count) {
       // this.onSubmit();
-      console.log('QuizDone');
       this.nextQuestion();
     }
     this.ellapsedTime = this.parseTime(diff);
@@ -174,24 +183,22 @@ export class QuizComponent implements OnInit, OnDestroy {
     var currentIndex = options.length, temporaryValue, randomIndex;
 
   // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
+    while (0 !== currentIndex) {
 
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
 
-    // And swap it with the current element.
-    temporaryValue = options[currentIndex];
-    options[currentIndex] = options[randomIndex];
-    options[randomIndex] = temporaryValue;
-  }
+      // And swap it with the current element.
+      temporaryValue = options[currentIndex];
+      options[currentIndex] = options[randomIndex];
+      options[randomIndex] = temporaryValue;
+    }
 
   return options;
   }
 
   clickfn(no: any){
-
-    console.log("click jhala-"  + no);
 
     // -----------------also working -------------------------------
     // const alllabels = this.elRef.nativeElement.querySelectorAll('[name="labels"]');
@@ -227,10 +234,8 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
 
   clearAll() {
-    console.log(this.div);
     if (this.div != null){
       this.div.querySelector('input').checked = false;
-      console.log(this.div.querySelector('input'));
       this.renderer.removeClass(this.div, 'changeLbl');
       this.renderer.addClass(this.div, 'radio-button-css');
       this.div = null;
