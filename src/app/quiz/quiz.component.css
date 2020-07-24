@@ -69,7 +69,7 @@
 }
 
 input[type="radio"]{
-     /*display: none; */
+    display: none;
 }
 
 .buttons-overall{

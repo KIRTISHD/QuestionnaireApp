@@ -101,7 +101,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     // ---------------------------------------------------
     this.ellapsedTime = '00:00';
     this.timer = setInterval(() => { this.tick(); }, 1000);
-    this.duration = this.parseTime(10);
+    this.duration = this.parseTime(30);
   }
 
   nextQuestion() {
@@ -218,7 +218,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     if (this.div != null) {
       this.renderer.removeClass(this.div, 'changeLbl');
       this.renderer.addClass(this.div, 'radio-button-css');
-    }  
+    }
 
     this.div = this.elRef.nativeElement.querySelector('#lbl_'+ no);
     this.renderer.removeClass(this.div, 'radio-button-css');
